@@ -1,0 +1,107 @@
+Historia de Debian
+Debian es una de las distribuciones más influyentes y longevas de Linux. Su historia comenzó en 1993, cuando Ian Murdock creó un proyecto que buscaba proporcionar una distribución de Linux estable y libre, pero con un enfoque más estructurado que otras opciones disponibles en aquel entonces. El nombre "Debian" es una combinación del nombre de Ian Murdock y el de su entonces novia, Debra Lynn.
+En sus primeros años, Debian fue conocida por su enfoque en la estabilidad, la flexibilidad y el cumplimiento de los estándares libres del software. A lo largo del tiempo, la comunidad creció rápidamente, con un sistema de desarrollo basado en voluntarios distribuidos globalmente. En lugar de una empresa única que financiara el proyecto, Debian es mantenido por una comunidad de miles de voluntarios, y es conocido por su enfoque en la decisión democrática en cuanto a las políticas del proyecto. Las decisiones importantes se toman a través de un sistema de votación entre los desarrolladores.
+Aspectos técnicos de Debian
+    • Gestor de paquetes: Debian usa APT (Advanced Package Tool) como su gestor de paquetes, que facilita la instalación, actualización y gestión de software.
+    • Soporte de arquitectura: Debian es extremadamente versátil, ya que soporta muchas arquitecturas de hardware, desde las más comunes como x86 y ARM hasta arquitecturas más antiguas como MIPS y SPARC.
+    • Ciclo de desarrollo: Debian es conocido por tener un ciclo de desarrollo largo y estable, con nuevas versiones de la distribución siendo lanzadas aproximadamente cada 2 años.
+    • Versiones: Debian tiene tres ramas principales:
+        ◦ Stable: La versión más confiable y segura, adecuada para producción.
+        ◦ Testing: La versión en desarrollo que tiene software más reciente, pero que todavía no ha sido probado completamente.
+        ◦ Unstable (Sid): La versión donde se desarrollan nuevas características, pero con el riesgo de ser menos estable.
+Aspectos humanos, políticos y fiabilidad de Debian
+    • Comunidad: Debian es completamente comunitaria. No tiene una entidad centralizada como empresa, lo que le da un enfoque muy democrático. Las decisiones son tomadas por los desarrolladores a través de un sistema de votación.
+    • Fiabilidad técnica: Debido a su política de solo lanzar nuevas versiones cuando están completamente probadas, Debian es extremadamente confiable. Esto lo hace popular en servidores y entornos donde la estabilidad es crucial.
+    • Fiabilidad humana y política: Debian ha mantenido una política de inclusión y de libertad del software. Está comprometido con la comunidad de software libre, y por tanto, cualquier software que se incluya en la distribución debe cumplir con los estándares de libertad definidos por la Free Software Foundation (FSF). En cuanto a la fiabilidad humana, Debian tiene una amplia base de contribuyentes de diferentes países y culturas, lo que aporta una enorme diversidad.
+    • Financiación: No está financiado por una empresa específica. Sin embargo, reciben donaciones y apoyos de empresas tecnológicas y otras organizaciones del mundo del software libre. Las empresas que contribuyen a Debian lo hacen principalmente por el impacto que tiene en sus servicios, sistemas y productos.
+Fortalezas de Debian:
+    • Estabilidad, especialmente en su versión Stable.
+    • Amplio soporte para arquitecturas y hardware.
+    • Sistema de gestión de paquetes robusto con APT.
+    • Gran comunidad activa y democrática.
+    • Fuerte compromiso con el software libre.
+Debilidades de Debian:
+    • Ciclo de lanzamiento largo, lo que significa que el software puede no estar actualizado con la última versión disponible.
+    • La configuración inicial de algunos paquetes puede ser más difícil que en otras distribuciones más orientadas a usuarios novatos.
+Historia de Rocky Linux
+Rocky Linux fue anunciado en 2020 como una respuesta a la decisión de Red Hat de cambiar el enfoque de CentOS. CentOS, que era una distribución de Linux basada en Red Hat Enterprise Linux (RHEL), anunció que se convertiría en una versión rolling release de RHEL, lo que dejó a muchos usuarios de CentOS buscando una alternativa estable.
+Gregory Kurtzer, quien fue uno de los fundadores originales de CentOS, decidió crear Rocky Linux como una distribución comunitaria y 100% compatible con RHEL. La meta de Rocky Linux fue ofrecer una alternativa gratuita y de código abierto para aquellos que necesitaban estabilidad y confiabilidad, similar a lo que CentOS había ofrecido en el pasado.
+Aspectos técnicos de Rocky Linux
+    • Compatibilidad con RHEL: Rocky Linux es completamente binariamente compatible con RHEL, lo que significa que los paquetes y aplicaciones que funcionan en RHEL funcionarán de la misma manera en Rocky Linux.
+    • Gestor de paquetes: Utiliza DNF como gestor de paquetes, que es el mismo que RHEL y CentOS.
+    • Ciclo de desarrollo: Rocky Linux sigue un ciclo de lanzamiento similar al de RHEL, proporcionando actualizaciones de seguridad y mejoras periódicas.
+Aspectos humanos, políticos y fiabilidad de Rocky Linux
+    • Comunidad: Aunque respaldado por una comunidad activa de desarrolladores, Rocky Linux es supervisado por la Rocky Linux Foundation, una organización sin fines de lucro dedicada a su desarrollo y sostenibilidad.
+    • Fiabilidad técnica: Como es completamente compatible con RHEL, se puede esperar que sea tan confiable como RHEL. Las actualizaciones de seguridad y el soporte a largo plazo (LTS) son fundamentales para su uso en servidores de producción.
+    • Fiabilidad humana y política: Rocky Linux se ve como una alternativa comunitaria a RHEL, que es mantenido por Red Hat (una subsidiaria de IBM). El proyecto se ve como una respuesta a la centralización de Red Hat en la comunidad de código abierto y como una opción de distribución para aquellos que prefieren evitar las políticas empresariales de Red Hat.
+    • Financiación: Aunque el proyecto es gestionado por una fundación sin fines de lucro, ha recibido apoyo de muchas empresas tecnológicas que dependen de distribuciones estables y fiables como Rocky Linux.
+Fortalezas de Rocky Linux:
+    • Total compatibilidad con RHEL, lo que facilita su adopción en entornos empresariales.
+    • Estabilidad, ya que está basado en el código fuente de RHEL.
+    • Respaldo de una fundación sin fines de lucro y una comunidad activa.
+Debilidades de Rocky Linux:
+    • A pesar de ser un reemplazo de CentOS, algunas empresas pueden preferir soluciones comerciales como RHEL debido al soporte adicional y las características de la empresa.
+    • Enfocado en el mundo empresarial, lo que puede hacer que no sea tan amigable para usuarios novatos.
+Uso de Debian y Rocky Linux
+    • Debian: Es utilizado principalmente en servidores, sistemas de desarrollo y en entornos donde la estabilidad es crucial. También se usa en entornos educativos y de investigación. Las empresas que necesitan una distribución estable y libre de software a menudo eligen Debian.
+    • Rocky Linux: Está orientado principalmente a servidores y entornos empresariales que buscan una alternativa gratuita a RHEL. Es popular en empresas que necesitan la compatibilidad con RHEL sin los costos asociados.
+Conclusión
+Debian es una distribución robusta, con una fuerte base comunitaria y un enfoque en la estabilidad y el software libre. Rocky Linux, por otro lado, fue creado como una respuesta a los cambios en CentOS, ofreciendo una solución empresarial confiable y compatible con RHEL. Ambas distribuciones tienen enfoques ligeramente diferentes, pero ambas se destacan por su fiabilidad técnica y el compromiso con la comunidad.
+
+MANTENIMIENTO Y SOPORTE:
+
+Debian
+    • Gratuito: Debian es completamente gratuito y no requiere ningún pago para descargar, usar o distribuir. No hay ninguna versión comercial de Debian que implique tarifas de licencia.
+    • Mantenimiento: Debian es mantenido por la comunidad de desarrolladores voluntarios. Las actualizaciones de seguridad y el mantenimiento de paquetes son gestionados por esta comunidad. Aunque el soporte en términos de actualizaciones de seguridad se realiza de forma continua, la distribución de Debian no tiene un modelo de soporte oficial como el de las empresas. Es decir, no hay una empresa que garantice soporte técnico en el sentido tradicional, aunque algunas organizaciones ofrecen soporte pago para Debian a través de consultorías y servicios adicionales.
+    • Soporte de largo plazo (LTS): Debian tiene versiones estables (como la rama Stable) que se mantienen durante un período prolongado, pero el soporte no es "comercial" de pago. Debian LTS (Long Term Support) es un esfuerzo comunitario para extender el soporte de seguridad durante más tiempo para las versiones estables de Debian, pero nuevamente, esto se maneja dentro de la comunidad y no a través de pagos.
+Rocky Linux
+    • Gratuito: Al igual que Debian, Rocky Linux es completamente gratuito. La descarga, el uso y la redistribución no requieren pagar ninguna tarifa.
+    • Mantenimiento: Rocky Linux tiene una fundación sin fines de lucro (la Rocky Linux Foundation) que organiza el desarrollo y mantenimiento de la distribución. Al ser una distribución basada en Red Hat Enterprise Linux (RHEL), Rocky Linux sigue el ciclo de vida de las actualizaciones y parches de seguridad de RHEL, lo que lo hace muy adecuado para entornos empresariales. Sin embargo, el mantenimiento de Rocky Linux en sí no implica tarifas, ya que es un proyecto de código abierto respaldado por la comunidad y algunas empresas que contribuyen al proyecto.
+    • Soporte de largo plazo: Al igual que Debian, Rocky Linux recibe actualizaciones de seguridad a largo plazo. Esto es importante para entornos de producción, pero el soporte en cuanto a servicios o mantenimiento especializado solo está disponible si se contratan servicios de empresas externas. A diferencia de RHEL, Rocky Linux no tiene un modelo de soporte pago oficial, pero las empresas pueden contratar soporte de terceros.
+Soporte comercial
+    • Debian: No tiene un soporte comercial oficial de la distribución. Sin embargo, debido a su popularidad, muchas empresas ofrecen soporte de pago para Debian, como consultorías, asesoría técnica o incluso soporte empresarial.
+    • Rocky Linux: Aunque el proyecto es gratuito, algunas empresas ofrecen soporte comercial para Rocky Linux, similar a cómo se ofrece soporte comercial para otras distribuciones de Linux como CentOS y RHEL. Empresas como CIQ ofrecen soporte para Rocky Linux, lo que lo hace adecuado para entornos empresariales que necesitan garantias y un nivel más formal de soporte técnico. CIQ (pronunciado "see-eye-queue")  es una empresa fundada por Gregory Kurtzer, uno de los creadores de CentOS y Rocky Linux, para asegurar la viabilidad a largo plazo de Rocky Linux como una alternativa empresarial de código abierto.
+Resumen
+    • Ambos sistemas operativos son gratuitos y de código abierto.
+    • Debian: El mantenimiento y las actualizaciones de seguridad son proporcionados por la comunidad, sin ningún modelo de soporte comercial oficial, aunque hay empresas que ofrecen soporte pago.
+    • Rocky Linux: Similarmente, el mantenimiento es gestionado por la comunidad, pero puede contar con soporte de pago de empresas como CIQ para aquellos que necesitan un servicio más profesional y con garantías.
+
+Árbol actualizado de distribuciones Linux:
+    1. UNIX
+└── Linux Kernel
+├── Debian
+│ ├── Ubuntu
+│ │ ├── Linux Mint
+│ │ ├── Pop!_OS
+│ │ ├── Kubuntu
+│ │ └── Lubuntu
+│ ├── Devuan (Debian sin systemd)
+│ ├── Raspbian (ahora Raspberry Pi OS)
+│ └── Kali Linux (antes BackTrack)
+│
+├── Red Hat Linux
+│ ├── Fedora
+│ │ └── RHEL (Red Hat Enterprise Linux)
+│ │ ├── CentOS (ya discontinuada, reemplazada por CentOS Stream)
+│ │ ├── AlmaLinux
+│ │ └── Rocky Linux
+│ └── Oracle Linux
+│
+├── Slackware
+│ ├── Slax
+│ └── Zenwalk
+│
+├── Arch Linux
+│ ├── Manjaro
+│ ├── EndeavourOS
+│ └── ArcoLinux
+│
+├── Gentoo
+│ ├── Chrome OS (basado en su gestor de paquetes)
+│ └── Sabayon (ahora MocaccinoOS)
+│
+├── SUSE Linux
+│ ├── openSUSE
+│ └── SUSE Linux Enterprise
+
+14/11/25
