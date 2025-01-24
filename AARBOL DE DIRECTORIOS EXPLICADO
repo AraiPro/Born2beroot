@@ -1,0 +1,106 @@
+Árbol de Directorios
+
+Debian GNU/Linux sigue un estándar de jerarquía de sistemas de archivos que organiza los directorios y nombres de manera que tanto los usuarios como los programas puedan localizar fácilmente los archivos y directorios necesarios. La raíz del sistema se denota con una barra diagonal (/). Dentro de esta raíz, todos los sistemas Debian incluyen los siguientes directorios:
+
+
+Directorio	          Contenido
+---------------------------------------------------------------------------------------
+bin	                  Archivos ejecutables esenciales del sistema.
+---------------------------------------------------------------------------------------
+boot	                Archivos utilizados por el programa que arranca el sistema.
+---------------------------------------------------------------------------------------
+dev	                  Archivos de dispositivos.
+---------------------------------------------------------------------------------------
+etc	                  Archivos de configuración específicos del sistema.
+---------------------------------------------------------------------------------------
+home	                Directorio principal de los usuarios.
+---------------------------------------------------------------------------------------
+lib	                  Bibliotecas compartidas esenciales y módulos del núcleo.
+---------------------------------------------------------------------------------------
+mnt	                  Punto de montaje temporal para un sistema de archivos.
+---------------------------------------------------------------------------------------
+proc	                Directorio virtual que contiene información sobre el sistema.
+---------------------------------------------------------------------------------------
+root	                Directorio personal del administrador del sistema.
+---------------------------------------------------------------------------------------
+sbin	                Archivos ejecutables esenciales del sistema.
+---------------------------------------------------------------------------------------
+tmp	                  Archivos temporales.
+---------------------------------------------------------------------------------------
+usr	                  Jerarquía secundaria con programas y archivos comunes.
+---------------------------------------------------------------------------------------
+var	                  Archivos con datos que cambian constantemente.
+---------------------------------------------------------------------------------------
+opt	                  Directorio para programas opcionales instalados manualmente.
+---------------------------------------------------------------------------------------
+
+
+A continuación, se presentan algunas consideraciones importantes con respecto a los directorios y las particiones:
+
+La partición raíz (/) debe contener, como mínimo, las particiones de /etc, /bin, /sbin, /lib y /dev, ya que de lo contrario, el sistema no podrá arrancar. Usualmente, se recomienda una partición raíz de 100 MB, aunque este valor puede variar dependiendo del uso que se le dé al sistema.
+La partición raíz es crítica porque contiene todo el sistema operativo, los archivos del sistema y las aplicaciones esenciales. Usualmente, debe estar en una partición separada para evitar problemas si el espacio se llena.
+
+/usr: Este directorio contiene los programas ejecutables (/usr/bin), las bibliotecas (/usr/lib), la documentación (/usr/share/doc), entre otros. Es la parte del sistema que más espacio consume, por lo que se recomienda asignar al menos 500 MB de espacio. Si se planea instalar más paquetes, es necesario incrementar el tamaño de esta partición.
+Este directorio contiene los archivos de los programas instalados, bibliotecas y datos compartidos. Es común asignar una partición o volumen lógico grande a /usr porque contiene la mayoría del software.
+
+/home: Este directorio almacena los datos de los usuarios, que se encuentran en subdirectorios dentro del mismo. El tamaño de esta partición dependerá del número de usuarios y de los archivos que cada uno guarde. Se recomienda reservar unos 100 MB por usuario, aunque este valor puede ajustarse según las necesidades específicas.
+Almacena los datos personales de los usuarios. Es una de las particiones más importantes porque normalmente se utiliza para almacenar documentos, música, imágenes, etc. En sistemas con múltiples usuarios, se recomienda tener un volumen lógico separado para evitar que los datos de usuario afecten al rendimiento del sistema.
+
+/var: Aquí se almacenan los datos que cambian con frecuencia, como correos electrónicos, artículos de noticias, caché de los paquetes del sistema, etc. El tamaño de esta partición depende del uso del sistema, pero para una instalación estándar se recomienda asignar entre 2 y 3 GB. Si la instalación se realiza por partes (por ejemplo, instalando primero los servicios básicos y luego el entorno gráfico), se recomienda asignar entre 300 y 500 MB para /var. Para sistemas que no requieren muchas actualizaciones, 30-40 MB pueden ser suficientes.
+ Almacena archivos que cambian frecuentemente, como los registros del sistema, el correo electrónico y la base de datos del sistema de paquetes. Es importante tener un volumen lógico separado para /var debido a que los registros pueden crecer rápidamente.
+
+/tmp: Este directorio se utiliza para almacenar archivos temporales creados por las aplicaciones. Normalmente, con 20 a 50 MB es suficiente para esta partición.
+Almacena archivos temporales creados por las aplicaciones. Es común asignar una partición pequeña o un volumen lógico dedicado a este directorio, ya que los archivos temporales no suelen ser importantes a largo plazo, pero requieren espacio.
+
+/opt: Utilizado para programas instalados manualmente o de terceros. En algunos casos, se asigna un volumen lógico para esta partición si se tienen muchas aplicaciones de este tipo.
+
+Este esquema de particiones y directorios asegura que el sistema Debian funcione de manera eficiente, distribuyendo el espacio de acuerdo con el tipo de datos y su frecuencia de cambio.
+
+
+La partición de discos es una práctica que comenzó desde los primeros sistemas operativos para gestionar de manera más eficiente los discos duros limitados en capacidad. La partición de discos fue una característica implementada en los sistemas operativos desde finales de la década de 1960 y principios de la década de 1970, pero la administración de volúmenes lógicos (LVM) se introdujo mucho más tarde.
+
+LVM (Logical Volume Manager) fue introducido en Linux a fines de la década de 1990. La tecnología LVM permite una mayor flexibilidad en la gestión de volúmenes lógicos y ha sido adoptada ampliamente en sistemas de producción debido a sus ventajas en términos de redimensionamiento dinámico, facilidad para agregar nuevos discos y la gestión de volúmenes de manera más eficiente que con las particiones tradicionales.
+
+Años 70-80: Los primeros sistemas operativos implementaron particiones de disco simples. Cada partición correspondía directamente a una sección del disco.
+1990s: Comienzo del uso de volúmenes lógicos, especialmente con la introducción de LVM en Linux.
+
+
+Inconvenientes de no particionar adecuadamente y no separar directorios como /var o /tmp:
+Saturación de espacio: Llenar una partición crítica puede afectar el resto del sistema, impidiendo operaciones esenciales como la escritura de registros o archivos temporales.
+
+Degradación del rendimiento: El llenado de directorios como /tmp o /var puede ralentizar o bloquear el sistema, ya que estos directorios son cruciales para el funcionamiento de las aplicaciones.
+
+Inestabilidad del sistema: La falta de espacio en directorios importantes puede hacer que el sistema deje de funcionar correctamente, incluso impidiendo el arranque.
+
+Dificultad en copias de seguridad: Al no separar las particiones, las copias de seguridad se vuelven más grandes y difíciles de gestionar, y la restauración del sistema es más compleja.
+
+Falta de flexibilidad: Sin particiones separadas, la expansión del espacio para un directorio específico es más complicada y puede afectar a otros directorios.
+
+Riesgos de seguridad: Los datos sensibles en directorios no separados son más vulnerables a ataques, ya que no se pueden aplicar restricciones de acceso adecuadas.
+
+Pérdida de datos por caídas del sistema: Si todo está en una sola partición, una caída del sistema o fallo de hardware puede resultar en la pérdida de datos difíciles de recuperar.
+
+PARTICIONES Y VOLUMENES LÓGICOS:
+Las particiones y los volúmenes lógicos (LVM) son métodos utilizados para gestionar el almacenamiento, pero tienen diferencias clave. Las particiones son divisiones físicas del disco, con un tamaño fijo y gestionadas directamente por el sistema operativo. Son rígidas y no permiten mucha flexibilidad, ya que cambiar su tamaño o moverlas puede ser complicado. En cambio, los volúmenes lógicos, gestionados por el sistema LVM, permiten una administración más dinámica y flexible, ya que se pueden redimensionar y extender sin necesidad de alterar físicamente el disco.
+
+Los volúmenes lógicos pueden combinar varios discos y optimizar el uso del espacio, lo que facilita la expansión, mientras que las particiones tienen un tamaño predeterminado y no pueden aprovechar el espacio libre de otras particiones. Además, LVM permite la creación de instantáneas y la configuración de sistemas RAID, mejorando la resiliencia y facilitando la recuperación de datos. Sin embargo, LVM introduce un mayor overhead en comparación con las particiones, que son más simples y con un menor impacto en el rendimiento.
+
+Las particiones son ampliamente compatibles con todos los sistemas operativos, mientras que los volúmenes lógicos requieren soporte específico para LVM, lo que los hace más adecuados para sistemas Linux y entornos donde se necesite flexibilidad y escalabilidad en la gestión del almacenamiento.
+
+
+CARACTERÍSTICA           | PARTICIONES                                                  | Volúmenes Lógicos (LVM)                        
+-------------------------|--------------------------------------------------------------|---------------------------------------------------------------------|
+Flexibilidad             | Baja, una vez creadas no se pueden cambiar fácilmente        | Alta, se pueden redimensionar, mover y combinar 
+-------------------------|--------------------------------------------------------------|---------------------------------------------------------------------|
+Gestión                  | Rígida, requiere herramientas específicas                    | Dinámica, gestionada por LVM                   
+-------------------------|--------------------------------------------------------------|---------------------------------------------------------------------|
+Escalabilidad            | Limitada a una partición física                              | Alta, se pueden añadir discos y expandir volúmenes lógicos 
+-------------------------|--------------------------------------------------------------|---------------------------------------------------------------------|
+Uso de espacio           | Fijo, sin posibilidad de compartir espacio entre particiones | Flexible, el espacio se distribuye según necesidades 
+-------------------------|--------------------------------------------------------------|---------------------------------------------------------------------|
+Resiliencia              | Limitada a la partición individual                           | Se pueden hacer snapshots y configurar RAID   
+-------------------------|--------------------------------------------------------------|---------------------------------------------------------------------|
+Compatibilidad           | Compatible con la mayoría de sistemas operativos             | Requiere soporte para LVM (principalmente Linux)
+-------------------------|--------------------------------------------------------------|---------------------------------------------------------------------|
+Overhead                 | Bajo, se gestiona directamente sobre el disco                | Algo mayor debido a la capa adicional de LVM    
+-------------------------|--------------------------------------------------------------|---------------------------------------------------------------------|
