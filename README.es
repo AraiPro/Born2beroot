@@ -31,4 +31,8 @@ apt install cron
 pwquality (para la gestión de contraseñas)
 sudo apt install libpwquality-tools
 
+Aunque no es necesario, te recomiendo qu ete instales tree, que es una herramienta para poder ver el arbol de directorios, con la cual podrás ubicar dónde está
+cada cosa:
+apt-get install tree
+
 Una vez tengas todos estos programas estarás listo/a para empezar a probar comandos y a administrar tu máquina Debian!!
