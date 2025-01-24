@@ -1,0 +1,50 @@
+¿Qué es APPArmor y cómo funciona?
+APPArmor (Application Armor) es un sistema de control de acceso obligatorio (MAC) que proporciona un conjunto de restricciones de seguridad para aplicaciones y procesos en un sistema operativo Linux. En lugar de controlar a los usuarios directamente (como lo hace el sistema de permisos estándar de Linux), APPArmor restringe lo que las aplicaciones pueden hacer, incluso si un usuario tiene permisos elevados.
+APPArmor se basa en perfiles de seguridad que definen qué puede o no puede hacer una aplicación en términos de acceso a archivos, red, dispositivos, etc. Los perfiles de APPArmor están asociados a cada aplicación y describen un conjunto de reglas que limitan sus permisos a un conjunto específico de recursos.
+Objetivo de APPArmor
+Su principal objetivo es proteger las aplicaciones contra posibles ataques o comportamientos no deseados. Si un atacante logra comprometer una aplicación, APPArmor puede limitar la cantidad de daño que puede hacer al resto del sistema.
+Ejemplos de uso de APPArmor
+Restricción de acceso a archivos
+        ◦ Ejemplo: Imagina que tienes un servidor web ejecutando nginx. Este servidor web puede necesitar acceder a archivos dentro de un directorio específico (como /var/www/html/), pero no debe poder acceder a otros archivos del sistema como /etc/passwd o /root/.
+        ◦ Solución con APPArmor: Puedes crear un perfil para nginx que restrinja el acceso a esos directorios específicos y evite que el proceso de nginx lea archivos sensibles fuera de su directorio autorizado.
+Limitación de acceso a la red
+    • Ejemplo: Tienes una aplicación que solo debería comunicarse con otros servidores en un puerto específico (por ejemplo, solo debe poder conectarse al puerto 80 para realizar solicitudes HTTP).
+    • Solución con APPArmor: Puedes configurar un perfil de seguridad que limite la capacidad de la aplicación para hacer conexiones de red solo en los puertos necesarios.
+
+# En /etc/apparmor.d/usr.bin.myapp
+network inet stream,
+network inet6 stream,
+deny network inet dgram,
+deny network inet6 dgram,
+En este ejemplo, myapp solo puede hacer conexiones de tipo stream (TCP) en IPv4 e IPv6, y no puede usar otros tipos de conexión como dgram (UDP).
+
+
+Restricción de ejecución de programas
+    • Ejemplo: Imagina que tienes una aplicación que no debería ejecutar otros programas del sistema, como el shell (/bin/bash) o herramientas administrativas.
+    • Solución con APPArmor: Puedes restringir la capacidad de la aplicación para ejecutar otros programas, asegurando que solo ejecute los archivos que se encuentran dentro de un directorio permitido.
+# En /etc/apparmor.d/usr.bin.myapp
+/bin/bash ix,  # Prohibido ejecutar bash
+/usr/bin/myapp r,
+Esto restringe a myapp para que solo pueda ejecutar sus propios binarios y no pueda invocar otras aplicaciones como el shell.
+Protección contra escalada de privilegios
+    • Ejemplo: Si tienes una aplicación que corre con privilegios bajos (por ejemplo, un servidor web que corre como un usuario no privilegiado), puedes usar APPArmor para evitar que la aplicación, en caso de ser comprometida, ejecute comandos como root o modifique archivos importantes del sistema.
+    • Solución con APPArmor: Puedes crear un perfil que limite las acciones que puede realizar la aplicación, como no permitir la ejecución de comandos con privilegios elevados.
+# En /etc/apparmor.d/usr.sbin.nginx
+deny /bin/* x,
+deny /sbin/* x,
+Esto impide que nginx ejecute cualquier programa de los directorios /bin/ o /sbin/, lo que ayuda a evitar escaladas de privilegios.
+
+¿Cómo interactúa APPArmor con las aplicaciones?
+    1. Perfiles de aplicación: Cada aplicación que quieras proteger con APPArmor necesita tener un perfil asociado. El perfil define un conjunto de reglas que controlan lo que la aplicación puede hacer. Estas reglas cubren cosas como acceso a archivos, acceso a la red, y ejecución de procesos.
+    2. Perfiles predeterminados: Algunas aplicaciones comunes ya tienen perfiles de APPArmor predefinidos (por ejemplo, apache2, nginx, mysql, etc.). Estos perfiles se pueden encontrar en el directorio /etc/apparmor.d/, y puedes editarlos para ajustarlos a tus necesidades.
+    3. Modos de APPArmor: Los perfiles de APPArmor pueden estar en dos modos:
+        ◦ Modo "complain" (denuncia): En este modo, APPArmor no bloquea las acciones no permitidas, pero las registra en los logs. Este modo es útil para probar y ajustar perfiles antes de activarlos completamente.
+        ◦ Modo "enforce" (aplicación): En este modo, APPArmor bloquea cualquier acción que no esté permitida explícitamente en el perfil de la aplicación. Este es el modo que se debe usar para activar las políticas de seguridad.
+    4. Cargando perfiles: Los perfiles de APPArmor se cargan en el kernel de Linux. Cuando un proceso intenta realizar una acción que está restringida por su perfil, APPArmor la bloquea o registra la acción, según el modo del perfil.
+    5. Auditoría: APPArmor puede generar registros para las acciones no permitidas, lo que te permite auditar qué aplicaciones están intentando realizar acciones prohibidas. Esto es útil para ajustarlos antes de aplicar un perfil de manera estricta.
+Resumiendo ejemplos de interacciones de APPArmor con aplicaciones
+    1. Aplicación web (como nginx) puede ser configurada para acceder solo a los archivos dentro de su directorio web y no a archivos del sistema, lo que previene que un atacante obtenga información sensible si compromete el servidor web.
+    2. Aplicación de base de datos (como mysql) puede estar limitada para que solo tenga acceso a su directorio de bases de datos y no pueda modificar archivos de configuración del sistema o ejecutar programas fuera de su alcance.
+    3. Aplicaciones con permisos elevados pueden ser limitadas para que, aunque se ejecuten con privilegios de root, no puedan ejecutar otros programas o acceder a áreas críticas del sistema.
+Conclusión
+APPArmor es una herramienta poderosa para mejorar la seguridad de tu sistema al restringir lo que las aplicaciones pueden hacer, limitando el daño que puede causar una aplicación comprometida. Funciona protegiendo aplicaciones específicas mediante perfiles que definen qué acciones pueden realizar (acceso a archivos, red, ejecución de comandos), sin necesidad de intervenir en la gestión de usuarios o contraseñas. Su capacidad para restringir recursos a nivel de aplicación ayuda a crear una capa adicional de seguridad en sistemas críticos o servicios expuestos a internet.
