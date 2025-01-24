@@ -14,7 +14,9 @@ Gestión de Usuarios y Grupos
     • Añadir un usuario a un grupo:
       sudo adduser *user* *group*
         ◦ Se puede crear el usuario y el grupo al mismo tiempo usando el comando anterior.
-
+    • Recuerda que tu usuario debe pertenecer a los grupos:
+        ◦ "sudo"
+	◦ "user42"
     • Consultar los usuarios de un grupo:
       getent group *group*
       O bien:
@@ -47,6 +49,13 @@ Servicio SSH
       sudo ufw status
     • Añadir otra regla de firewall para permitir otro puerto (ejemplo: 4242):
       sudo ufw allow 4242
+UFW /  Firewall
+    • Para eliminar reglas ufw:
+      sudo ufw status numbered
+    • Miramos en la numeración a cual corresponde, ten en cuenta que debemos eliminar de abajo a arriba o hacer varias comprobaciones:
+      sudo ufw delete 2
+    • Otra opción para eliminar reglas ufw:
+      sudo ufw delete allow 8080
 
 Política de Contraseñas
     • Comprobar la expiración de contraseñas (global):
