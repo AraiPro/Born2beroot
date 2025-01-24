@@ -4,7 +4,7 @@ Se trata de una guía complementaria, orientada a que enfrentar la evaluación.
 Aquí encontarás resumenes de todos los aspectos generales del proyecto, y te darán una idea asequible de qué es cada cosa.
 Pero esto no es más que una iniciación, lo suficiente como para poder aprobar el proyecto y una pequeña base sobre la que poder ir construyendo.
 
-La guía comienza depués de que te hayas descargado la última versión estable de Debian:[
+La guía comienza depués de que te hayas descargado la última versión estable de [Debian:
 ](https://www.debian.org/distrib/index.es.html)
 Lo primero que debes saber es cual es la arquitectura de tu ordenador para saber cual descargar. Para la instalación te recomiendo que utilices una de las muchas
 guías que ya existen, en la que te explicarán paso a paso como configurar tu máquina virtual e instalar Debian sin entorno gráfico y cómo crear las particiones,
