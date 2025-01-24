@@ -1,0 +1,44 @@
+APT Y APTITUDE
+
+APT (Advanced Package Tool) y Aptitude son dos herramientas de gestión de paquetes en sistemas basados en Debian.
+
+Cuando instalas una distribución como Debian o Ubuntu, el sistema viene preconfigurado con una lista de repositorios desde los cuales APT y Aptitude pueden descargar paquetes. Los repositorios están especificados en un archivo de configuración llamado /etc/apt/sources.list y otros archivos dentro del directorio /etc/apt/sources.list.d/. Estos archivos contienen las direcciones URL de los repositorios.
+
+Se podría decir que apt y aptitud tuvieran acceso a un cátalogo de aplicaciones y paquetes que pueden instalar si tu se lo ordenas
+
+Cuando ejecutas el comando apt update, APT se conecta a los repositorios listados en /etc/apt/sources.list para obtener la lista más reciente de programas disponibles (llamados paquetes). Este proceso actualiza la base de datos local de tu sistema con los últimos paquetes disponibles en los repositorios.
+
+Cuando ejecutas un comando como apt install <programa>, APT busca ese paquete en los repositorios y, si lo encuentra, lo descarga e instala en tu sistema. Los paquetes están empaquetados en un formato que tu sistema puede entender y gestionar (por ejemplo, .deb para distribuciones basadas en Debian/Ubuntu).
+
+Resumen:
+    • APT y Aptitude obtienen las aplicaciones desde repositorios de software.
+    • Los repositorios están gestionados por las distribuciones de Linux (como Debian, Ubuntu, etc.) y contienen software libre o de código abierto que ha sido empaquetado y verificado para su instalación.
+    • Los nombres de los repositorios varían, pero generalmente incluyen secciones como main, universe, restricted, y multiverse.
+    • Los repositorios se configuran en archivos como /etc/apt/sources.list y se actualizan con el comando apt update.
+Por lo tanto, APT y Aptitude son herramientas que se comunican con estos repositorios para descargar, instalar, actualizar o eliminar software de tu sistema.
+APT es el más común y fácil de usar, mientras que Aptitude tiene una interfaz más visual y te permite buscar y organizar los programas de una forma más sencilla.
+
+Puedes pensar en APT como un asistente rápido de línea de comandos y en Aptitude como una aplicación con un menú de opciones, aunque ambos hacen lo mismo: instalar, actualizar y eliminar programas de tu computadora.
+
+
+APT (Advanced Package Tool) es un sistema de gestión de paquetes que utiliza comandos sencillos para que tu computadora descargue e instale programas desde un repositorio centralizado. Es como tener una tienda de aplicaciones, pero en lugar de hacerlo manualmente, puedes usar comandos para que tu computadora se encargue del proceso por ti.
+
+Aptitude es una herramienta similar, pero con una interfaz más amigable, que permite realizar las mismas acciones de forma más visual, como si estuvieras usando un programa con ventanas. 
+
+Ambas interactúan con el sistema de gestión de paquetes dpkg, pero tienen diferencias clave en su funcionamiento.
+
+dpkg es el sistema de gestión de paquetes de bajo nivel en distribuciones basadas en Debian (como Ubuntu). Es la herramienta que realmente instala, actualiza, elimina y gestiona los archivos de paquetes .deb en tu sistema.
+A diferencia de APT y Aptitude, que se encargan de la gestión de dependencias y la descarga de paquetes desde repositorios remotos, dpkg trabaja localmente, solo con paquetes .deb que ya han sido descargados pero no maneja dependencias ni se comunica con repositorios remotos como APT o Aptitude.
+Cuando utilizas APT o Aptitude para instalar un paquete, ambos (en el fondo) delegan la tarea de instalar el paquete a dpkg. APT y Aptitude se encargan de gestionar las dependencias y buscar los paquetes en los repositorios, pero cuando el paquete está listo para instalarse, dpkg es el que realiza la instalación efectiva en el sistema.
+APT y Aptitude se aseguran de que los paquetes necesarios (dependencias) se descarguen e instalen antes de que dpkg los instale.
+
+Cuando eliminas un paquete usando APT o Aptitude, ambos utilizan dpkg para eliminar realmente el paquete de tu sistema.
+
+¿Qué cosas pueden hacerse con Aptitude que no se pueden hacer con APT?
+Aunque APT y Aptitude realizan funciones muy similares, Aptitude tiene algunas ventajas y características que no se encuentran en APT:
+    • Interfaz interactiva: Aptitude ofrece una interfaz visual en la terminal (de modo texto) que permite explorar, buscar y gestionar paquetes de una manera más visual que con APT, que es más directo y basado en comandos.
+    • Mejor resolución de dependencias: Aptitude puede manejar de manera más eficiente los problemas de dependencias al sugerir soluciones automáticas cuando hay conflictos de paquetes, lo que puede hacer que su uso sea más cómodo cuando hay conflictos complicados.
+    • Manejo de grupos de paquetes: En Aptitude, puedes ver y gestionar fácilmente los paquetes en categorías, mientras que en APT no hay una opción tan visual para gestionar grupos de paquetes.
+    • Historial de cambios y acciones: Aptitude mantiene un historial más detallado de las acciones que realizas, lo que puede ser útil si quieres revisar lo que has hecho con los paquetes.
+Ejemplo: Para resolver dependencias rotas
+Si tienes dependencias rotas o un paquete incompleto en tu sistema, Aptitude generalmente te dará más opciones para arreglarlo automáticamente que APT.
