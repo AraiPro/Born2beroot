@@ -1,0 +1,136 @@
+Comprobación del Entorno Gráfico
+    • Comprobar si el entorno gráfico está instalado:
+      echo $DISPLAY
+        ◦ Si no devuelve nada, es que no tiene entorno gráfico.
+        ◦ Si devuelve :0, tiene un entorno gráfico.
+Comprobación de particiones y volumenes lógicos
+	lsblk
+
+Gestión de Usuarios y Grupos
+    • Crear un usuario:
+      sudo adduser *user*
+    • Crear un grupo:
+      sudo addgroup *group*
+    • Añadir un usuario a un grupo:
+      sudo adduser *user* *group*
+        ◦ Se puede crear el usuario y el grupo al mismo tiempo usando el comando anterior.
+
+    • Consultar los usuarios de un grupo:
+      getent group *group*
+      O bien:
+      cat /etc/group
+    • Consultar los grupos de un usuario:
+      groups *user*
+    • Cambiar la contraseña de un usuario:
+        ◦ Desde el mismo usuario:
+          passwd
+        ◦ Desde otro usuario o el root (con permisos sudo):
+          sudo passwd *user*  # Para cambiar la contraseña de otro usuario
+          sudo passwd root    # Para cambiar la contraseña de root
+    • Modificar hostname:
+        ◦ sudo nano /etc/hostname
+        ◦ sudo nano /etc/hosts
+	Hay que modificar los dos.
+
+Servicio SSH
+    • Comprobar el estado del servicio SSH:
+      sudo service ssh status
+      Si el servicio no está funcionando, reinícialo:
+      sudo service ssh restart
+    • Comprobar si el puerto 4242 está habilitado y si la conexión desde root está permitida:
+      cat /etc/ssh/sshd_config
+    • Comprobar configuración de puertos también en:
+      cat /etc/ssh/ssh_config
+    • Habilitar el firewall:
+      sudo ufw enable
+    • Ver las conexiones autorizadas en el firewall:
+      sudo ufw status
+    • Añadir otra regla de firewall para permitir otro puerto (ejemplo: 4242):
+      sudo ufw allow 4242
+
+Política de Contraseñas
+    • Comprobar la expiración de contraseñas (global):
+      cat /etc/login.defs | grep PASS
+    • Comprobar la expiración para usuarios específicos:
+      sudo passwd -S *user*
+      O la versión más detallada:
+      sudo chage -l *user*
+    • Comprobar la política de contraseñas comunes para root y usuarios:
+      sudo nano /etc/security/pwquality.conf
+    • Comprobar las políticas de contraseñas solo para usuarios:
+      cat /etc/pam.d/common-password | grep password
+
+Sudoers y Accesos
+    • Comprobar que sudo está instalado:
+        ◦ which sudo
+          
+    • Comprobar configuración de sudoers:
+        ◦ Para verificar que no se permita usar root ni sudo fuera de TTY, ejecuta:
+          sudo visudo
+        ◦ Asegúrate de que el archivo de sudoers tenga configuraciones como:
+            ▪ No permitir root ni sudo fuera de TTY
+            ▪ Máximo de 3 intentos de contraseña para sudo
+            ▪ Restringir directorios sudo (la configuración que viene en el subject)
+
+Manejo de Huésped SSH desde la Terminal del Anfitrión
+    • Conectar la terminal del huésped con la terminal del anfitrión:
+      ssh *user*@localhost -p *port*
+    • Verificar que la conexión es con un usuario y no con root:
+      whoami
+    • Resetear la finger print SSH si es una nueva VM:
+      ssh-keygen -f "/home/*user*/.ssh/known_hosts" -R "[localhost]:*port*"
+      (en *port* ponemos el puerto correspondiente, en mi caso 4342)
+    • Reiniciar SSH en caso de error con la contraseña:
+        ◦ En la terminal del huésped:
+          sudo systemctl restart ssh
+
+Comando para manipular crontab
+sudo crontab -u root -e
+Apuntes Explicativos sobre el Script
+1. Shebang
+El script debe comenzar con la línea de Shebang, que indica que debe ser ejecutado con el intérprete de comandos bash:
+#!/bin/bash
+2. Arquitectura del Sistema
+Para obtener información sobre la arquitectura del sistema, puedes utilizar el comando uname con la opción -a:
+uname -a
+Este comando muestra detalles sobre el sistema operativo y la arquitectura.
+3. Monitoreo de CPU
+El monitoreo de la carga de la CPU en tiempo real puede ser algo complicado, ya que no hay un comando directo que te diga el porcentaje exacto. Sin embargo, puedes utilizar métodos como los siguientes:
+Generar Carga en la CPU
+El comando yes > /dev/null & genera una carga constante sobre la CPU sin mostrar salida en la terminal:
+yes > /dev/null &
+Este comando crea un proceso que consume recursos de la CPU continuamente.
+Controlar la Carga con cpulimit
+Puedes limitar el uso de CPU de un proceso específico con el comando cpulimit. Por ejemplo, para limitar el proceso yes a un 40% de uso de la CPU:
+sudo cpulimit -p $(pgrep yes) -l 40
+Esto asegura que el proceso nunca consuma más del 40% de la CPU.
+Detener el Proceso
+Para detener el proceso generado por el comando yes, puedes usar el siguiente comando:
+sudo pkill yes
+Desglose del Comando
+yes: Este comando genera una cadena de texto repetidamente. Por defecto, imprime "y" en la salida estándar, aunque puedes especificar cualquier otra cadena que desees que se repita.
+> /dev/null: Esto redirige la salida del comando yes a /dev/null, que es un "dispositivo nulo". Cualquier cosa que se envíe a /dev/null se descarta, por lo que no verás la salida del comando en tu terminal. Esto es útil para evitar que tu terminal se llene de texto innecesario.
+&: Al final del comando, el & indica que deseas ejecutar el comando en segundo plano. Esto permite que la terminal siga disponible para otros comandos mientras yes sigue ejecutándose.
+
+Monitoreo en Tiempo Real con mpstat
+mpstat es útil para monitorear el uso de la CPU en tiempo real. El comando mpstat 1 muestra estadísticas de la CPU cada segundo:
+mpstat 1
+Aunque mpstat no muestra directamente el porcentaje de carga de la CPU, puedes extraer esta información procesando su salida.
+Usar htop
+htop es otra herramienta interactiva para monitorear el uso de la CPU, pero al ser interactiva, no puedes redirigir su salida fácilmente a un archivo. Sin embargo, puedes ejecutar htop en modo batch con el siguiente comando (aunque también interactúa):
+htop -b
+Monitoreo de Comandos sudo
+    • Registrar los comandos ejecutados con sudo:
+        ◦ Los comandos enviados por terminal se registran en journalctl, que requiere permisos sudo para acceder.
+        ◦ Acceder a los logs de sudo con journalctl:
+          sudo journalctl | grep sudo
+    • Resetear los logs de sudo:
+        ◦ Para eliminar el archivo de registro de sudo:
+          sudo rm /var/log/sudo/registro.log
+        ◦ Para resetear los logs de journalctl:
+            ▪ Eliminar registros más antiguos que 1 segundo:
+              sudo journalctl --vacuum-time=1s
+            ▪ Forzar la rotación de los logs:
+              sudo journalctl --rotate
+            ▪ Eliminar logs hasta que el tamaño total sea menor de 1MB:
+              sudo journalctl --vacuum-size=1M
