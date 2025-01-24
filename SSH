@@ -1,0 +1,48 @@
+SSH
+
+SSH es como una conexión segura que te permite controlar otra computadora desde lejos. Por ejemplo, si tienes un servidor en la nube, puedes usar SSH para acceder a él desde tu laptop y trabajar como si estuvieras sentado frente a ese servidor. La herramienta encripta todo lo que envías y recibes está encriptado, lo que significa que nadie puede interceptarlo o leerlo.
+
+SSH es un protocolo de red que permite la comunicación segura y encriptada entre dos dispositivos. Opera sobre el puerto 22 por defecto y proporciona funciones como:
+    • Acceso remoto seguro.
+    • Transferencia segura de archivos (SCP, SFTP).
+    • Túneles cifrados (port forwarding). SSH garantiza confidencialidad, integridad y autenticación mediante claves asimétricas, con opciones para usar contraseñas, claves públicas/privadas o autenticación multifactor. Implementaciones populares incluyen OpenSSH, con soporte adicional para extensiones como X11 forwarding y agentes de claves.
+
+SSH: ¿Servicio o Protocolo?
+La respuesta es que SSH (Secure Shell) es ambas cosas, dependiendo del contexto en el que se use. A continuación te lo explico:
+Resumen:
+    • Protocolo SSH: El conjunto de reglas para establecer una conexión segura y cifrada entre un cliente y un servidor.
+    • Servicio SSH: El programa que ejecuta el servidor, esperando conexiones y gestionando la sesión SSH.
+
+
+1. SSH como Protocolo
+SSH es un protocolo de red que define un conjunto de reglas para establecer una conexión segura entre dos dispositivos. Este protocolo garantiza que la comunicación sea:
+    • Encriptada: Los datos enviados están protegidos para que no puedan ser interceptados.
+    • Autenticada: Verifica que ambas partes sean quienes dicen ser.
+    • Segura: Protege contra ataques como el "man-in-the-middle".
+SSH opera principalmente sobre el puerto 22 por defecto y se utiliza para diversas tareas:
+    • Acceso remoto seguro a servidores.
+    • Transferencia de archivos (a través de SCP o SFTP).
+    • Túneles seguros (port forwarding).
+
+2. SSH como Servicio
+Cuando hablamos de SSH como un servicio, nos referimos al software que implementa este protocolo y que se ejecuta en un servidor o dispositivo. Este software escucha en el puerto 22 y espera conexiones de clientes SSH.
+Componentes del servicio SSH:
+    • Servidor SSH: Software que acepta conexiones. Ejemplos:
+        ◦ OpenSSH Server (muy común en sistemas Linux).
+        ◦ Windows SSH Server (opcional en Windows).
+    • Cliente SSH: Software que se conecta al servidor SSH para iniciar la comunicación. Ejemplos:
+        ◦ Comando ssh en terminales Linux.
+        ◦ Aplicaciones como PuTTY o MobaXterm.
+
+Resumiendo:
+    • SSH como protocolo: Conjunto de reglas que define cómo se debe establecer y mantener una comunicación segura.
+    • SSH como servicio: Software que implementa este protocolo para ofrecer funcionalidad (servidor o cliente).
+Ejemplo práctico:
+    • Protocolo: Las reglas que permiten a tu computadora comunicarse de forma segura con un servidor.
+    • Servicio: El programa que corre en el servidor, esperando conexiones SSH.
+
+Sobre el requisito de denegar el permiso de usar root o sudo fuera de TTY
+
+En el contexto de sistemas Unix y Linux, TTY significa "Teletypewriter" y hace referencia a un dispositivo o terminal de entrada/salida que se utiliza para interactuar con el sistema operativo. Tradicionalmente, los TTY eran dispositivos físicos de terminales, pero en los sistemas modernos, un TTY es una representación de cualquier terminal virtual (como la consola local o una sesión SSH) que interactúa con el sistema.
+Cuando se dice que "no está permitido usar root ni sudo fuera de TTY", esto significa que el acceso a privilegios de superusuario (root) o el uso de sudo se limita a las sesiones que están directamente conectadas a un terminal físico o virtual (como una sesión en la consola o en un terminal remoto SSH), y no se permite en entornos no interactivos, como scripts o tareas automáticas.
+El comando requitty es una medida de seguridad que obliga a que las operaciones con privilegios (como el uso de sudo) solo puedan ejecutarse en un TTY, evitando su uso en situaciones automáticas o no interactivas, que podrían ser más susceptibles a ataques. Esto ayuda a mejorar la seguridad, asegurando que los comandos sensibles solo se ejecuten en sesiones donde un usuario está presente y puede autenticarse adecuadamente.
