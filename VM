@@ -1,0 +1,105 @@
+Funcionamiento Básico de una Máquina Virtual
+1. ¿Qué es una Máquina Virtual (VM)?
+Una máquina virtual (VM) es un entorno de software que emula un sistema informático completo. Permite ejecutar un sistema operativo (SO) dentro de otro SO o directamente sobre el hardware físico, ofreciendo aislamiento y flexibilidad.
+Las máquinas virtuales son administradas por un hipervisor.
+El hipervisor es el componente clave en la virtualización. Es el software que crea y ejecuta máquinas virtuales, actuando como intermediario entre el hardware físico y las Vms.
+Se encarga de gestionar los recursos físicos, como la CPU, la memoria, el almacenamiento y los dispositivos de red, y distribuirlos entre las VM de manera eficiente. 
+Hipervisor:
+Administra las VMs y gestiona los recursos físicos (CPU, memoria, almacenamiento, dispositivos de red).
+      Funciones del hipervisor:
+    1. Asignación de recursos físicos a cada VM.
+    2. Abstracción del hardware físico, proporcionando dispositivos virtuales.
+    3. Gestión del aislamiento entre las VMs.
+    4. Optimización del uso de recursos mediante técnicas de sobreasignación (overcommit).
+Funcionamiento técnico:
+El hipervisor intercepta las instrucciones privilegiadas (por ejemplo, acceso a la CPU, memoria, dispositivos de E/S) y las emula o las traduce para que el sistema operativo huésped piense que está interactuando directamente con hardware físico. Para hacerlo eficiente, utiliza tecnologías de hardware como Intel VT-x o AMD-V, que aceleran la virtualización reduciendo la necesidad de emulación intensiva.
+      Tipos de Hipervisores:
+      
+          Tipo 1 (bare-metal):
+            ▪ Corre directamente sobre el hardware físico.
+            ▪ Ofrece alto rendimiento y seguridad.
+            ▪ Ejemplos: VMware ESXi, Microsoft Hyper-V, Xen.
+              
+          Tipo 2 (hosted):
+            ▪ Corre sobre un sistema operativo anfitrión como una aplicación.
+            ▪ Más fácil de configurar pero menos eficiente.
+            ▪ Ejemplos: VirtualBox, VMware Workstation, Parallels.
+
+No confundir virutalización Tipo 1 con Dual Boot:
+
+![VM vs Dual Boot](/VM1.png)
+
+2. Modelos de Virtualización
+2.1 Virtualización Completa
+Emula completamente el hardware, permitiendo que el SO huésped se ejecute sin modificaciones.
+Ejemplo: VirtualBox.
+2.2 Paravirtualización
+En lugar de interceptar todas las instrucciones privilegiadas, el sistema operativo huésped hace llamadas específicas al hipervisor (a través de Hypercalls) para tareas como gestión de memoria, planificación de la CPU y acceso a dispositivos de E/S. Esto reduce significativamente la sobrecarga. Xen, por ejemplo, puede ejecutar sistemas operativos huéspedes paravirtualizados que hacen uso directo de estas interfaces, eliminando la necesidad de emulación.
+Ventajas:
+    • Rendimiento superior debido a la menor cantidad de traducciones necesarias.
+    • Mejor uso de recursos del hardware.
+Desventajas:
+    • Necesita modificar el kernel del sistema operativo huésped, lo que puede limitar la compatibilidad.
+Ejemplo: Xen.
+2.3 Virtualización a Nivel de Sistema Operativo
+Comparte el núcleo del SO anfitrión para ofrecer entornos aislados.
+En este modelo, no se virtualiza el hardware, sino que se utilizan las capacidades de aislamiento del sistema operativo anfitrión (como los namespaces y cgroups en Linux) para ejecutar múltiples aplicaciones o entornos en contenedores.
+Funcionamiento técnico:
+    • Namespaces: Aíslan diferentes recursos del sistema operativo, como el sistema de archivos, red, ID de procesos, etc., asegurando que cada contenedor tenga su propio entorno aislado.
+    • cgroups (Control Groups): Limita y gestiona el uso de recursos del sistema (CPU, memoria, disco) para cada contenedor.
+Los contenedores comparten el núcleo del sistema operativo anfitrión, pero cada uno tiene su propio sistema de archivos, bibliotecas y dependencias necesarias.
+Ventajas:
+    • Inicio casi instantáneo de contenedores, ya que no requieren cargar un sistema operativo completo.
+    • Eficiencia en el uso de recursos, permitiendo una alta densidad de contenedores en un solo sistema físico.
+Desventajas:
+    • Menor aislamiento que en otros modelos, ya que todos los contenedores comparten el mismo núcleo.
+    • Dependencia del núcleo del anfitrión: solo puede ejecutar sistemas operativos que sean compatibles con el mismo (por ejemplo, contenedores Linux sobre un sistema operativo Linux).
+
+Ejemplo: Docker.
+
+![Modelos de virtualización](/VM2.png)
+
+Aunque tb se pueden asignar memorias físicas a la VM, la VM es capaz de crear:
+
+Discos Virtuales (Archivos de Imagen): Puedes crear un disco virtual (como un archivo .vdi, .vmdk, etc.) que se utiliza como el disco duro de la máquina virtual. Este disco puede ser formateado y utilizado por el sistema operativo dentro de la VM (por ejemplo, Debian) como si fuera un disco físico.
+    • Acceso desde la VM: Una vez que has asignado el disco virtual a la máquina virtual y el sistema operativo de la VM lo ha montado, puedes leer y escribir datos en él. Todos los datos que almacenes en este disco virtual serán accesibles desde la máquina virtual.
+
+¿Qué es un VDI?
+    • Formato de Disco Virtual: El archivo VDI actúa como un disco duro virtual para una máquina virtual en VirtualBox. Contiene el sistema operativo, aplicaciones y datos de la máquina virtual, pero es simplemente un archivo en el sistema de archivos del anfitrión.
+2. Ejecución de Programas en el VDI
+    • No Autoejecutable: Un archivo VDI no puede ejecutar ningún programa automáticamente en el sistema anfitrión. Para que cualquier programa contenido en un VDI se ejecute, primero debes iniciar la máquina virtual que utiliza ese disco virtual.
+    • Requiere el Hipervisor: Solo cuando la máquina virtual está activa, el sistema operativo dentro de la VM puede ejecutar aplicaciones. Los programas no pueden interactuar directamente con el sistema operativo anfitrión a menos que se configure explícitamente la comunicación entre ellos.
+3. Acceso a los Archivos del VDI
+    • Montaje Directo: Puedes acceder a los archivos contenidos en un VDI desde el sistema anfitrión si lo montas (usando herramientas de terceros o comandos específicos), pero esto no se recomienda debido a la posibilidad de corrupción de datos y problemas de integridad.
+    • Acceso Seguro: Los VDI son archivos que contienen un sistema de archivos y no son directamente ejecutables. Si hay malware o software malicioso dentro de un VDI, no afectará al sistema anfitrión a menos que la VM se inicie y el software malicioso se ejecute dentro de esa VM.
+    • 
+UTILIDADES DE LAS VM
+
+1. Desarrollo y pruebas de software
+    • Entornos de desarrollo controlados: Los desarrolladores pueden utilizar VMs para crear entornos controlados de desarrollo, probando nuevas versiones de software o configuraciones sin preocuparse por interferir con el entorno de producción.
+    • Pruebas en diferentes sistemas operativos y configuraciones: Las máquinas virtuales permiten a los desarrolladores probar su software en diferentes sistemas operativos, configuraciones y versiones de software sin necesidad de tener múltiples dispositivos físicos.
+2. Consolidación de servidores
+    • Optimización de recursos: En el mundo de los servidores, las máquinas virtuales permiten ejecutar varios servidores virtualizados sobre una sola máquina física. Esto mejora la utilización de los recursos (como CPU, RAM y almacenamiento), reduce el espacio físico necesario y facilita la administración centralizada de recursos.
+    • Reducción de costes: Al consolidar varios servidores en una sola máquina física, las empresas pueden reducir costos en hardware, energía, y mantenimiento. Esto también se traduce en una menor huella ecológica.
+3. Ejecutar múltiples sistemas operativos en una sola máquina
+	· Puede ser útil par desarrolladores pero tb a nivel usuario si necesitas aplicaciones que 	sean exclusivas de diferentes sistemas operativos.
+	· También para crear laboratorios virtuales para el ámbito educativo
+4. Facilitar la virtualización de redes y servidores
+    • Infraestructura como servicio (IaaS): Las VMs son fundamentales en la creación de plataformas de infraestructura virtualizada, como las que proporcionan servicios en la nube (por ejemplo, AWS, Azure). Estas plataformas permiten que los usuarios alquilen recursos de computación, almacenamiento y red, todos basados en máquinas virtuales.
+    • Creación de redes virtuales: Las máquinas virtuales pueden crear y simular redes completas (por ejemplo, en la virtualización de servidores o infraestructura como servicio, IaaS). Esto permite la creación de entornos de red complejos con múltiples VMs que pueden interconectarse entre sí, simular tráfico de red o probar configuraciones sin la necesidad de hardware físico.
+5. Backup y recuperación rápida
+    • Instantáneas (Snapshots) para secuencias diferentes momentos y volver a diferentes puntos de recuperación lo que a su vez facilita la:
+    • Recuperación ante desastres
+6. Seguridad y sandboxing
+    • Entornos aislados: Las VMs permiten crear entornos completamente aislados donde se pueden ejecutar aplicaciones potencialmente peligrosas, como el caso de analizar software malicioso (malware) en un entorno controlado sin riesgo de afectar el sistema operativo anfitrión. Este tipo de uso se conoce como "sandboxing".
+    • Contención de aplicaciones: Al ejecutar aplicaciones en VMs separadas, se puede garantizar que si una aplicación tiene fallos o vulnerabilidades, no afecte a otros sistemas.
+7. Migración en vivo
+    • Migración de VMs entre hosts: En entornos de virtualización avanzada (como VMware vSphere o Microsoft Hyper-V), es posible migrar una máquina virtual de un servidor físico a otro sin interrupciones en el servicio. Esto permite realizar tareas de mantenimiento en los servidores sin que los servicios de las VMs se vean afectados.
+    • Balanceo de carga: En entornos de virtualización en la nube o de centros de datos, se pueden mover las máquinas virtuales de un host a otro para optimizar la carga de trabajo y distribuir el uso de recursos de manera más eficiente.
+8. Implementación de infraestructuras de servicios y aplicaciones
+    • Hospedaje de aplicaciones: Las máquinas virtuales se utilizan para ejecutar servicios y aplicaciones de manera aislada, como bases de datos, servidores web, y aplicaciones empresariales. Cada VM puede estar dedicada a una función específica, lo que facilita la administración y la escalabilidad.
+9. Recursos bajo demanda en la nube
+    • Cloud computing: Las máquinas virtuales son la base de muchos servicios de computación en la nube, permitiendo que los usuarios alquilen recursos de procesamiento, almacenamiento y redes
+
+Conclusión
+Las máquinas virtuales son extremadamente útiles por su capacidad para aislar sistemas y aplicaciones, optimizar recursos, facilitar la migración de servicios, y mejorar la seguridad y la gestión de infraestructuras. Son esenciales tanto en entornos de producción como en laboratorios de pruebas y educación, y son la piedra angular de tecnologías como la virtualización de servidores, infraestructura como servicio (IaaS) y computación en la nube.
